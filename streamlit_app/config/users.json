@@ -1,0 +1,12 @@
+{
+  "admin": {
+    "password_hash": "8c6976e5b5410415bde908bd4dee15dfb167a9c873fc4bb8a81f6f2ab448a918",
+    "role": "admin",
+    "name": "Administrator"
+  },
+  "manager": {
+    "password_hash": "a7c5cade2e8c6a33a55d58f4f2fc38fd5d5bc7e2db4a9c9e3c2e06c26427e5b2",
+    "role": "manager",
+    "name": "Inventory Manager"
+  }
+}
