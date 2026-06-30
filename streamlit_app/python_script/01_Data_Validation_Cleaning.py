@@ -31,13 +31,8 @@ import os
 import warnings
 warnings.filterwarnings('ignore')
 
-# ── File paths (update these each month before running) ──────────────
-CONSUMPTION_FILE = r'D:\Deets Internship\Safety Stock automation\Final_Deployment\streamlit_app\Monthly_upload\client_next_month_consumption.xlsx'
-LEADTIME_FILE    = r'D:\Deets Internship\Safety Stock automation\Final_Deployment\streamlit_app\Monthly_upload\client_next_month_leadtime.xlsx'
-
-# ── Output paths ─────────────────────────────────────────────────────
-OUTPUT_CONSUMPTION = r'D:\Deets Internship\Safety Stock automation\Final_Deployment\streamlit_app\Monthly_upload\Clean\cleam_consumption.csv'
-OUTPUT_LEADTIME    = r'D:\Deets Internship\Safety Stock automation\Final_Deployment\streamlit_app\Monthly_upload\Clean\clean_leadtime.csv'
+# ── File paths ───────────────────────────────────────────────────────
+from config.paths import CONSUMPTION_FILE, LEADTIME_FILE, OUTPUT_CONSUMPTION, OUTPUT_LEADTIME
 
 # ── Required columns ─────────────────────────────────────────────────
 REQUIRED_CONSUMPTION_COLS = ['material_id', 'date', 'demand']

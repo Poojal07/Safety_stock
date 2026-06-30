@@ -30,10 +30,8 @@ import os
 import warnings
 warnings.filterwarnings('ignore')
 
-# ── Input paths ───────────────────────────────────────────────────────
-HISTORICAL_FILE = r'D:\Deets Internship\Safety Stock automation\Final_Deployment\streamlit_app\Data\Final_dataset.csv'
-MONTHLY_FILE = r'D:\Deets Internship\Safety Stock automation\Final_Deployment\streamlit_app\final_month_data\processed_monthly_data.csv'# ── Output path ───────────────────────────────────────────────────────
-OUTPUT_FILE = r'D:\Deets Internship\Safety Stock automation\Final_Deployment\streamlit_app\Data_SES\updated_historical_dataset.csv'
+# ── Input & Output paths ──────────────────────────────────────────────
+from config.paths import HISTORICAL_DATA as HISTORICAL_FILE, PROCESSED_MONTHLY_DATA as MONTHLY_FILE, UPDATED_HISTORICAL_DATA as OUTPUT_FILE
 
 # ── Date column name (matches Notebook 02 output) ────────────────────
 DATE_COL = 'Date'

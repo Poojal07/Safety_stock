@@ -31,9 +31,7 @@ import warnings
 warnings.filterwarnings('ignore')
 
 # ── Input / Output paths ──────────────────────────────────────────────────────
-FORECAST_FILE   = r'D:\Deets Internship\Safety Stock automation\Final_Deployment\streamlit_app\Final_prediction\forecast_results.csv'
-HISTORICAL_FILE = r'D:\Deets Internship\Safety Stock automation\Final_Deployment\streamlit_app\Data_SES\updated_historical_dataset.csv'
-OUTPUT_FILE     = r'D:\Deets Internship\Safety Stock automation\Final_Deployment\streamlit_app\Client_deliverable\Prediction.csv'
+from config.paths import FORECAST_RESULTS as FORECAST_FILE, UPDATED_HISTORICAL_DATA as HISTORICAL_FILE, FINAL_PREDICTION_FILE as OUTPUT_FILE
 
 WORKING_DAYS = 30
 

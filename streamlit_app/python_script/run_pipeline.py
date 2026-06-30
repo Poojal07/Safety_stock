@@ -22,12 +22,16 @@ import sys
 from pathlib import Path
 
 
-# ── Resolve project root (one level above python_script/) ─────────────────────
-PROJECT_ROOT = Path(__file__).resolve().parent.parent
-
-# ── Fixed folder layout (matches CURRENT FOLDER STRUCTURE in spec) ────────────
-MONTHLY_UPLOAD_DIR  = PROJECT_ROOT / "Monthly_upload"
-SCRIPTS_DIR         = PROJECT_ROOT / "python_script"
+# ── Dynamic paths from config.paths ───────────────────────────────────────────
+from config.paths import (
+    PROJECT_ROOT,
+    MONTHLY_UPLOAD as MONTHLY_UPLOAD_DIR,
+    PYTHON_SCRIPT as SCRIPTS_DIR,
+    DATA_SES,
+    FINAL_PREDICTION,
+    CLIENT_DELIVERABLE,
+    FINAL_MONTH_DATA
+)
 
 # ── Pipeline stage definitions ────────────────────────────────────────────────
 PIPELINE_STAGES = [
@@ -59,10 +63,10 @@ def _ensure_dirs() -> None:
     dirs = [
         MONTHLY_UPLOAD_DIR,
         MONTHLY_UPLOAD_DIR / "Clean",
-        PROJECT_ROOT / "final_month_data",
-        PROJECT_ROOT / "Data_SES",
-        PROJECT_ROOT / "Final_prediction",
-        PROJECT_ROOT / "Client_deliverable",
+        FINAL_MONTH_DATA,
+        DATA_SES,
+        FINAL_PREDICTION,
+        CLIENT_DELIVERABLE,
     ]
     for d in dirs:
         d.mkdir(parents=True, exist_ok=True)

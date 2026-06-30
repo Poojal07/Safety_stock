@@ -40,12 +40,8 @@ import numpy as np
 import warnings
 warnings.filterwarnings('ignore')
 
-# ── Input paths ───────────────────────────────────────────────────────
-INPUT_CONSUMPTION = r'D:\Deets Internship\Safety Stock automation\Final_Deployment\streamlit_app\Monthly_upload\Clean\cleam_consumption.csv'
-INPUT_LEADTIME    = r'D:\Deets Internship\Safety Stock automation\Final_Deployment\streamlit_app\Monthly_upload\Clean\clean_leadtime.csv'
-
-# ── Output path ───────────────────────────────────────────────────────
-OUTPUT_FILE = r'D:\Deets Internship\Safety Stock automation\Final_Deployment\streamlit_app\final_month_data\processed_monthly_data.csv'
+# ── Input & Output paths ──────────────────────────────────────────────
+from config.paths import INPUT_CONSUMPTION, INPUT_LEADTIME, PROCESSED_MONTHLY_DATA as OUTPUT_FILE
 
 print('Configuration loaded successfully.')
 
@@ -387,7 +383,7 @@ print(processed_df.head(5).to_string(index=False))
 # ## 13. Save Output
 
 # %%
-# OUTPUT_FILE = r'D:\Deets Internship\Safety Stock automation\Final_Deployment\final_month_data\final_month_data\processed_monthly_data.csv'
+# OUTPUT_FILE = PROCESSED_MONTHLY_DATA
 processed_df.to_csv(OUTPUT_FILE, index=False)
 
 print(f'✅ Saved: {OUTPUT_FILE}  ({len(processed_df)} rows, {processed_df["material_id"].nunique()} materials)')

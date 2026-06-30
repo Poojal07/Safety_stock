@@ -31,8 +31,7 @@ from statsmodels.tsa.holtwinters import SimpleExpSmoothing
 warnings.filterwarnings('ignore')
 
 # ── Input / Output paths ──────────────────────────────────────────────
-INPUT_FILE  = r'D:\Deets Internship\Safety Stock automation\Final_Deployment\streamlit_app\Data_SES\updated_historical_dataset.csv'
-OUTPUT_FILE = r'D:\Deets Internship\Safety Stock automation\Final_Deployment\streamlit_app\Final_prediction\forecast_results.csv'
+from config.paths import UPDATED_HISTORICAL_DATA as INPUT_FILE, FORECAST_RESULTS as OUTPUT_FILE
 
 
 # ── Column names (must match Notebook 02/03 output exactly) ──────────

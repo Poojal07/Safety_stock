@@ -16,7 +16,8 @@ Final_Deployment/
 │   ├── PROJECT_CONTEXT.md          ← Enterprise Systems Manual (this file)
 │   │
 │   ├── config/
-│   │   └── users.json              ← Secured local credential hashes
+│   │   ├── users.json              ← Secured local credential hashes
+│   │   └── paths.py                ← Central dynamic path configuration (Single Source of Truth)
 │   │
 │   ├── modules/
 │   │   ├── __init__.py
@@ -142,3 +143,11 @@ graph TD
 - **Active Directory / SSO:** Implement single sign-on (SSO) configurations for seamless corporate identity verification.
 - **Real PDF Generation:** Integrate reportlab or weasyprint to generate formatted PDFs from HTML templates.
 - **Interactive Animations:** Integrate Lottie animations in the sidebar and loading screens for enhanced visual feedback.
+
+---
+
+## 9. Dynamic Path Configuration System
+
+- **Path Module:** Mapped centrally inside `config/paths.py`.
+- **Portability:** Replaces all hardcoded, absolute Windows drive links (`D:\...`, `C:\...`) across all backend pipeline scripts and frontend modules.
+- **Multi-Environment Support:** Dynamically calculates paths relative to the current file location, allowing out-of-the-box execution on Windows, Linux, Docker, Streamlit Community Cloud, Render, and local GitHub checkouts without manually editing configuration parameters.

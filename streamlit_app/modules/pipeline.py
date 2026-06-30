@@ -20,16 +20,17 @@ from typing import Generator
 # Project Paths
 # ============================================================
 
-DEPLOYMENT_ROOT = Path(__file__).resolve().parent.parent
-
-SCRIPTS_DIR = DEPLOYMENT_ROOT / "python_script"
-
-MONTHLY_DIR = DEPLOYMENT_ROOT / "Monthly_upload"
-
-PREDICTION_FILE = (
-    DEPLOYMENT_ROOT
-    / "Client_deliverable"
-    / "Prediction.csv"
+from config.paths import (
+    PROJECT_ROOT as DEPLOYMENT_ROOT,
+    PYTHON_SCRIPT as SCRIPTS_DIR,
+    MONTHLY_UPLOAD as MONTHLY_DIR,
+    FINAL_PREDICTION_FILE as PREDICTION_FILE,
+    FINAL_MONTH_DATA,
+    DATA_SES,
+    FINAL_PREDICTION,
+    CLIENT_DELIVERABLE,
+    CONSUMPTION_FILE,
+    LEADTIME_FILE
 )
 
 # ── Business-friendly step labels shown in the UI ────────────────────────────
@@ -50,18 +51,18 @@ def _ensure_dirs() -> None:
     for folder in [
         MONTHLY_DIR,
         MONTHLY_DIR / "Clean",
-        DEPLOYMENT_ROOT / "final_month_data",
-        DEPLOYMENT_ROOT / "Data_SES",
-        DEPLOYMENT_ROOT / "Final_prediction",
-        DEPLOYMENT_ROOT / "Client_deliverable",
+        FINAL_MONTH_DATA,
+        DATA_SES,
+        FINAL_PREDICTION,
+        CLIENT_DELIVERABLE,
     ]:
         folder.mkdir(parents=True, exist_ok=True)
 
 
 def _copy_uploads(consumption_bytes: bytes, leadtime_bytes: bytes) -> None:
     """Write uploaded file bytes to the Monthly_upload directory."""
-    (MONTHLY_DIR / "Consumption.xlsx").write_bytes(consumption_bytes)
-    (MONTHLY_DIR / "LeadTime.xlsx").write_bytes(leadtime_bytes)
+    CONSUMPTION_FILE.write_bytes(consumption_bytes)
+    LEADTIME_FILE.write_bytes(leadtime_bytes)
 
 
 def _run_script(script_name: str) -> tuple[bool, str]:
