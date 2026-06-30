@@ -256,12 +256,24 @@ def render_historical_page() -> None:
         with c6:
             # Top 20 historical consumption materials
             top_mat = filtered_hist.groupby("material_id")["Demand"].sum().reset_index().nlargest(20, "Demand")
+            top_mat["material_id"] = top_mat["material_id"].astype(str)
+            top_mat = top_mat.sort_values("Demand", ascending=False)
+            height = max(600, len(top_mat) * 35)
             fig_top = px.bar(
-                top_mat, x="Demand", y=top_mat["material_id"].astype(str),
+                top_mat, x="Demand", y="material_id",
                 orientation="h", color_discrete_sequence=["#58A6FF"],
-                labels={"Demand": "Total Ingested Demand", "y": "Material ID"}
+                labels={"Demand": "Total Ingested Demand", "material_id": "Material ID"},
+                height=height,
             )
-            fig_top.update_layout(yaxis=dict(autorange="reversed"))
+            fig_top.update_traces(
+                texttemplate="%{x:,.0f}",
+                textposition="outside",
+                hovertemplate="<b>Material ID:</b> %{y}<br><b>Total Historical Demand:</b> %{x:,.0f} Units<extra></extra>"
+            )
+            fig_top.update_layout(
+                yaxis=dict(type="category", autorange="reversed"),
+                bargap=0.25
+            )
             st.plotly_chart(charts._apply_theme(fig_top, "Top 20 Materials by Historical Volume"), use_container_width=True)
 
     # ══════════════════════════════════════════════════════════════════════════

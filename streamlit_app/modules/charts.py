@@ -41,15 +41,27 @@ def _apply_theme(fig: go.Figure, title: str = "") -> go.Figure:
 def top_forecast_demand(df: pd.DataFrame, n: int = 15) -> go.Figure:
     top = df.nlargest(n, "forecast_demand")[["material_id", "forecast_demand"]].copy()
     top["material_id"] = top["material_id"].astype(str)
+    top = top.sort_values("forecast_demand", ascending=False)
+    height = max(600, len(top) * 35)
     fig = px.bar(
         top, x="forecast_demand", y="material_id",
         orientation="h",
         color="forecast_demand",
         color_continuous_scale=["#1F3A6E", "#1F6FEB", "#79C0FF"],
         labels={"forecast_demand": "Forecast Demand", "material_id": "Material ID"},
+        height=height,
     )
-    fig.update_traces(marker_line_width=0)
-    fig.update_layout(coloraxis_showscale=False, yaxis=dict(autorange="reversed"))
+    fig.update_traces(
+        marker_line_width=0,
+        texttemplate="%{x:,.0f}",
+        textposition="outside",
+        hovertemplate="<b>Material ID:</b> %{y}<br><b>Forecast Demand:</b> %{x:,.0f} Units<extra></extra>"
+    )
+    fig.update_layout(
+        coloraxis_showscale=False, 
+        yaxis=dict(type="category", autorange="reversed"),
+        bargap=0.25
+    )
     return _apply_theme(fig, f"Top {n} Materials by Forecast Demand")
 
 
@@ -61,15 +73,27 @@ def top_order_cost(df: pd.DataFrame, n: int = 15) -> go.Figure:
         return go.Figure()
     top = df.nlargest(n, col)[["material_id", col]].copy()
     top["material_id"] = top["material_id"].astype(str)
+    top = top.sort_values(col, ascending=False)
+    height = max(600, len(top) * 35)
     fig = px.bar(
         top, x=col, y="material_id",
         orientation="h",
         color=col,
         color_continuous_scale=["#3D1A1A", "#F85149", "#FFB3AE"],
         labels={col: "Order Cost (₹)", "material_id": "Material ID"},
+        height=height,
     )
-    fig.update_traces(marker_line_width=0)
-    fig.update_layout(coloraxis_showscale=False, yaxis=dict(autorange="reversed"))
+    fig.update_traces(
+        marker_line_width=0,
+        texttemplate="₹%{x:,.0f}",
+        textposition="outside",
+        hovertemplate="<b>Material ID:</b> %{y}<br><b>Estimated Order Cost:</b> ₹%{x:,.2f}<extra></extra>"
+    )
+    fig.update_layout(
+        coloraxis_showscale=False, 
+        yaxis=dict(type="category", autorange="reversed"),
+        bargap=0.25
+    )
     return _apply_theme(fig, f"Top {n} Materials by Estimated Order Cost")
 
 
@@ -156,7 +180,14 @@ def priority_bar(df: pd.DataFrame) -> go.Figure:
         textposition="outside",
         textfont=dict(color="#E6EDF3"),
     ))
-    fig.update_layout(xaxis_tickangle=-20)
+    fig.update_traces(
+        texttemplate="%{y:,.0f}",
+        hovertemplate="<b>Priority:</b> %{x}<br><b>Materials Count:</b> %{y:,.0f}<extra></extra>"
+    )
+    fig.update_layout(
+        xaxis=dict(type="category", tickangle=-20),
+        bargap=0.3
+    )
     return _apply_theme(fig, "Materials by Business Priority")
 
 
@@ -266,6 +297,14 @@ def lead_time_distribution(df: pd.DataFrame) -> go.Figure:
         text=counts["Count"], textposition="outside",
         textfont=dict(color="#E6EDF3"),
     ))
+    fig.update_traces(
+        texttemplate="%{y:,.0f}",
+        hovertemplate="<b>Category:</b> %{x}<br><b>Count:</b> %{y:,.0f}<extra></extra>"
+    )
+    fig.update_layout(
+        xaxis=dict(type="category"),
+        bargap=0.3
+    )
     return _apply_theme(fig, "Lead Time Category Distribution")
 
 
@@ -373,9 +412,16 @@ def yearly_demand_trend(df: pd.DataFrame) -> go.Figure:
     fig = px.bar(
         yearly, x="Year", y=demand_col,
         color_discrete_sequence=["#58A6FF"],
-        text_auto=True,
     )
-    fig.update_layout(xaxis=dict(type="category"))
+    fig.update_traces(
+        texttemplate="%{y:,.0f}",
+        textposition="outside",
+        hovertemplate="<b>Year:</b> %{x}<br><b>Total Demand:</b> %{y:,.0f} Units<extra></extra>"
+    )
+    fig.update_layout(
+        xaxis=dict(type="category"),
+        bargap=0.3
+    )
     return _apply_theme(fig, "Yearly Demand Trend")
 
 
@@ -673,8 +719,16 @@ def cost_by_priority(df: pd.DataFrame) -> go.Figure:
             "Routine Stock": "#3FB950",
             "Order On Demand": "#8B949E"
         },
-        text_auto=True,
         labels={cost_col: "Total Cost (₹)", priority_col: "Priority Tier"}
+    )
+    fig.update_traces(
+        texttemplate="₹%{y:,.0f}",
+        textposition="outside",
+        hovertemplate="<b>Priority Tier:</b> %{x}<br><b>Total Cost:</b> ₹%{y:,.2f}<extra></extra>"
+    )
+    fig.update_layout(
+        xaxis=dict(type="category"),
+        bargap=0.3
     )
     return _apply_theme(fig, "Recommended Purchase Capital by Priority Tier")
 
