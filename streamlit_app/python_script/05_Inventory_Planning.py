@@ -30,6 +30,14 @@ import numpy as np
 import warnings
 warnings.filterwarnings('ignore')
 
+# ── Setup path resolution for subprocess execution ────────────────────
+from pathlib import Path
+import sys
+
+PROJECT_ROOT = Path(__file__).resolve().parent.parent
+if str(PROJECT_ROOT) not in sys.path:
+    sys.path.insert(0, str(PROJECT_ROOT))
+
 # ── Input / Output paths ──────────────────────────────────────────────────────
 from config.paths import FORECAST_RESULTS as FORECAST_FILE, UPDATED_HISTORICAL_DATA as HISTORICAL_FILE, FINAL_PREDICTION_FILE as OUTPUT_FILE
 
